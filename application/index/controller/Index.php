@@ -2,6 +2,8 @@
 namespace app\index\controller;
 
 use think\Controller;
+
+use think\Db;
 use think\Request;
 use think\Url;
 
@@ -103,6 +105,24 @@ class Index extends Controller
         $this->redirect('index/index/index',['name'=>'hello']);
     }
 
+    
+    //数据库操作
+    public function db()
+    {
+        //添加：
+//        $res = Db::execute("INSERT INTO `tb_tag`(`v_tag_name`) VALUES('Angulrar.js')");
+//        halt($res);
+        //修改：编译预处理
+//        $res = Db::execute("UPDATE `tb_tag` set v_tag_name = 'Angular' where n_id=?",[13]);
+//        halt($res);
+//          $res = Db::execute("UPDATE `tb_tag` set v_tag_name = 'AngularJS' where n_id=:id",['id'=>13]);
+//          halt($res);
+        //查询：
+//        $res = Db::query("SELECT * FROM tb_tag");
+//        halt($res);
+        //跨库查询：
+//        $list = Db::connect('db2')->query('SELECT `account` FROM  `tp_admin_user`');
+//        halt($list);
 
-
+    }
 }
