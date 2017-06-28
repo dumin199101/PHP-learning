@@ -12,7 +12,34 @@ class Index extends Controller
 {
     public function index()
     {
-        return 'Hello World';
+        return "Hello World";
+    }
+
+    /**
+     * 生成Guid
+     * @param $trim
+     * @return string
+     */
+    public function guid($trim)
+    {
+        if (function_exists('com_create_guid') === true)
+        {
+            return trim(com_create_guid(), '{}');
+        }else{
+            mt_srand((double)microtime() * 10000);
+            $charid = strtoupper(md5(uniqid(rand(), true)));
+            $hyphen = chr(45);                  // "-"
+            $lbrace = $trim ? "" : chr(123);    // "{"
+            $rbrace = $trim ? "" : chr(125);    // "}"
+            $guidv4 = $lbrace.
+                substr($charid,  0,  8).$hyphen.
+                substr($charid,  8,  4).$hyphen.
+                substr($charid, 12,  4).$hyphen.
+                substr($charid, 16,  4).$hyphen.
+                substr($charid, 20, 12).
+                $rbrace;
+            return $guidv4;
+        }
     }
 
     //路由测试
