@@ -4,6 +4,7 @@ namespace app\index\controller;
 use think\Controller;
 
 use think\Db;
+use think\Exception;
 use think\Request;
 use think\Url;
 
@@ -123,7 +124,39 @@ class Index extends Controller
         //跨库查询：
 //        $list = Db::connect('db2')->query('SELECT `account` FROM  `tp_admin_user`');
 //        halt($list);
+    }
 
+    public function db2()
+    {
+        //自动提交事务
+        Db::transaction(function(){
+            Db::name('tag')->insert([
+                'v_tag_name'=>'Go'
+            ]);
+            Db::name('tag')->update(
+                [
+                    'v_tag_name'=>'Angular',
+                    'n_id'=>13
+                ]
+            );
+        });
+
+        //手动提交事务：
+        Db::startTrans();
+        try{
+            Db::name('tag')->insert([
+                'v_tag_name'=>'Vue'
+            ]);
+            Db::name('tag')->update(
+                [
+                    'v_tag_name'=>'Angular JS',
+                    'n_id'=>13
+                ]
+            );
+            Db::commit();
+        }catch (Exception $e){
+            Db::rollback();
+        }
     }
 
     //链式操作，查询构建器，事务
