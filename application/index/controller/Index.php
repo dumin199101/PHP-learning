@@ -126,8 +126,16 @@ class Index extends Controller
 //        halt($list);
     }
 
+    //链式操作，查询构建器，事务
     public function db2()
     {
+        $list = Db::table('tb_tag')->field('v_tag_name')
+            ->where('n_id','gt',5)
+            ->order('n_id desc')
+            ->limit(0,3)
+            ->select();
+        dump($list);
+
         //自动提交事务
         Db::transaction(function(){
             Db::name('tag')->insert([
@@ -157,26 +165,5 @@ class Index extends Controller
         }catch (Exception $e){
             Db::rollback();
         }
-    }
-
-    //链式操作，查询构建器，事务
-    public function db2()
-    {
-        $list = Db::table('tb_tag')->field('v_tag_name')
-            ->where('n_id','gt',5)
-            ->order('n_id desc')
-            ->limit(0,3)
-            ->select();
-        dump($list);
-
-        //自动执行事务：
-        Db::transaction(function(){
-            Db::name('tag')->insert(['v_tag_name'=>'Java']);
-            Db::name('tag')->update(['v_tag_name'=>'Angular'],);
-        });
-
-        //手动执行事务
-
-
     }
 }
