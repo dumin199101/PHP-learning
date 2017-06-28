@@ -76,14 +76,6 @@ class Index extends Controller
         echo "模块：" . $this->request->module() . '<br/>';
         echo "控制器：" . $this->request->controller() . '<br/>';
         echo "方法：" . $this->request->action() . '<br/>';
-
-
-
-
-
-
-
-
     }
 
     //响应：
@@ -166,4 +158,6 @@ class Index extends Controller
             Db::rollback();
         }
     }
+
+
 }
