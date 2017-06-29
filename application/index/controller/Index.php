@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use think\Controller;
+
 use think\Db;
 use think\db\Query;
 use think\Exception;
@@ -12,7 +13,34 @@ class Index extends Controller
 {
     public function index()
     {
-        return 'Hello World';
+        return "Hello World";
+    }
+
+    /**
+     * 生成Guid
+     * @param $trim
+     * @return string
+     */
+    public function guid($trim)
+    {
+        if (function_exists('com_create_guid') === true)
+        {
+            return trim(com_create_guid(), '{}');
+        }else{
+            mt_srand((double)microtime() * 10000);
+            $charid = strtoupper(md5(uniqid(rand(), true)));
+            $hyphen = chr(45);                  // "-"
+            $lbrace = $trim ? "" : chr(123);    // "{"
+            $rbrace = $trim ? "" : chr(125);    // "}"
+            $guidv4 = $lbrace.
+                substr($charid,  0,  8).$hyphen.
+                substr($charid,  8,  4).$hyphen.
+                substr($charid, 12,  4).$hyphen.
+                substr($charid, 16,  4).$hyphen.
+                substr($charid, 20, 12).
+                $rbrace;
+            return $guidv4;
+        }
     }
 
     //路由测试
@@ -76,14 +104,6 @@ class Index extends Controller
         echo "模块：" . $this->request->module() . '<br/>';
         echo "控制器：" . $this->request->controller() . '<br/>';
         echo "方法：" . $this->request->action() . '<br/>';
-
-
-
-
-
-
-
-
     }
 
     //响应：
@@ -105,6 +125,7 @@ class Index extends Controller
         $this->error('处理失败','index/index/index',['age'=>22],2);
         $this->redirect('index/index/index',['name'=>'hello']);
     }
+
     
     //数据库操作
     public function db()
@@ -125,10 +146,16 @@ class Index extends Controller
 //        halt($list);
     }
 
-
-    //事务链式操作查询构建器
+    //链式操作，查询构建器，事务
     public function db2()
     {
+        $list = Db::table('tb_tag')->field('v_tag_name')
+            ->where('n_id','gt',5)
+            ->order('n_id desc')
+            ->limit(0,3)
+            ->select();
+        dump($list);
+
         //自动提交事务
         Db::transaction(function(){
             Db::name('tag')->insert([
@@ -210,5 +237,6 @@ class Index extends Controller
 //            ->select();
 //        halt($info);
     }
+
 
 }
