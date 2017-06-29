@@ -3,6 +3,7 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Db;
+use think\db\Query;
 use think\Exception;
 use think\Request;
 use think\Url;
@@ -124,6 +125,8 @@ class Index extends Controller
 //        halt($list);
     }
 
+
+    //事务链式操作查询构建器
     public function db2()
     {
         //自动提交事务
@@ -157,6 +160,55 @@ class Index extends Controller
         }
     }
 
+    //数据库查询（上）
+    public function db3()
+    {
+        //where条件查询
+//        $info = Db::name('tag')->where('n_id',4)->find();
+//        halt($info);
+        //条件可以是：> < >= <= <> in between
+//        $info = Db::name('tag')->where('n_id','=',4)->find();
+//        $info = Db::name('tag')->where('n_id','<>',4)->select();
+//        $info = Db::name('tag')->where('n_id','between',[3,6])->select();
+//        $info = Db::name('tag')->where('n_id','in',[2,3,4])->select();
+//        halt($info);
 
+        //查询某个字段为null
+//        $info = Db::name('tag')->where('v_tag_name',null)->select();
+//        halt($info);
+
+        //使用EXP表达式执行原生查询
+//        $info = Db::name('tag')->where('n_id','exp','in (2,3,5)')->select();
+//        halt($info);
+
+        //多个字段查询
+//        $info = Db::name('article')->where('n_id','>','3')->where('v_title','like','%文章%')->select();
+//        halt($info);
+
+        //or查询：
+//        $info = Db::name('article')->where('n_id','>',7)->whereOr('v_title','蚊帐')->select();
+//        halt($info);
+
+        //快捷查询：
+//        $info = Db::name('article')->where('n_browse_count&n_update_time','>',0)->select();
+//        halt($info);
+    }
+
+    //视图：相当于将查询结果缓存起来，使用Query对象查询
+    public function db4()
+    {
+        //Query对象
+//        $query = new Query();
+//        $query->name('tag')->where('n_id','>',10);
+//        $result = Db::select($query);
+//        halt($result);
+        //视图
+        //create view my_view(id,name) as select id name from article
+//        $info = Db::view('article',['n_id','n_cat_id'])
+//            ->view('category',['n_id'=>'n_cat_id','v_cat_name'],'article.n_cat_id = category.n_id')
+//            ->where('article.n_id','>',4)
+//            ->select();
+//        halt($info);
+    }
 
 }
