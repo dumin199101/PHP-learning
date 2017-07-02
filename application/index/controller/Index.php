@@ -239,4 +239,60 @@ class Index extends Controller
     }
 
 
+    //查询日期，某行，某列，分块查询
+    public function db5()
+    {
+        //获取某行某列
+//        $value = Db::name('tag')->where('n_id',6)->value('v_tag_name');
+//        halt($value);
+
+        //获取某列
+//        $values = Db::name('tag')->where('n_id','>',10)->column('v_tag_name');
+//        halt($values);
+
+        //获取id跟val的键值对数组
+//        $values = Db::name('tag')->where('n_id','>',10)->column('v_tag_name','n_id');
+//        halt($values);
+
+        //获取ID跟整条数据的键值对
+//        $values = Db::name('category')->where('n_id','>',2)->column('*','n_id');
+//        halt($values);
+
+        //聚合查询
+//        $values = Db::name('category')->where('n_id','>',2)->column('*','n_id');
+//        halt($count);
+
+//          $max = Db::name('category')->where('n_id','>',2)->max('n_id');
+//          halt($max);
+
+        //日期查询：（int类型存储）
+//        $list = Db::name('article')->whereTime('n_update_time','>','2017-05-02')->select();
+//        halt($list);
+
+        //查询本周：this week last week today yesterday
+//        $list = Db::name('article')->whereTime('n_update_time','>','this week')->select();
+//        halt($list);
+
+        //查询两天前
+//        $list = Db::name('article')->whereTime('n_update_time','>','-2 days')->select();
+//        halt($list);
+
+        //查询时间段
+//        $list = Db::name('article')->whereTime('n_update_time','between',['2016-04-02','2017-04-02'])->select();
+//        halt($list);
+
+        //分块查询：假设有100万条数据，同时加载到内存就有问题了。返回值为boolean
+//       Db::name('article')->field(['n_id','v_title'])->chunk(2,function($list){
+//            //数据处理
+//            foreach($list as &$v){
+//                $v['v_title'] = $v['v_title'] . '---chunk';
+//            }
+//        });
+
+
+
+
+    }
+
+
 }
