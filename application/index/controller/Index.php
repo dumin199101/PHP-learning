@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 
+use app\common\model\User;
 use think\Controller;
 
 use think\Db;
@@ -292,6 +293,25 @@ class Index extends Controller
 
 
 
+    }
+    
+    //模型和关联
+    public function relation()
+    {
+        //插入数据：save方法返回值为boolean，如果想获取自增ID：$user->n_id
+//        $user = new User();
+//        $user->v_username = 'lieyan2';
+//        $user->v_password = 'S4cj77RLvgCEeGK2WujphQ==';
+//        $res = $user->save();
+//        halt($res);
+//        halt($user->n_id);
+
+        //插入数据2：
+//        $data['v_username'] = 'lieyan3';
+//        $data['v_password'] = 'S4cj77RLvgCEeGK2WujphQ==';
+//        if($result = User::create($data)){
+//            echo $result->v_username . '---' . $result->v_password . '---' . $result->n_id;
+//        }
     }
 
 
