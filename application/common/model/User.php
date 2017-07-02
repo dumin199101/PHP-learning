@@ -15,4 +15,14 @@ class User extends Model
 {
 //    protected $table = 'tb_admin';
     protected $name = 'admin';
+    //读取器
+    protected function getVUsernameAttr($name,$data){
+        echo $name . '---'; //属性值
+        dump($data); //对象值
+        return 1; //返回值
+    }
+    //修改器
+    protected function setVUsernameAttr($name,$data){
+        return 2;
+    }
 }

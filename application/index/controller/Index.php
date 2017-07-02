@@ -368,5 +368,21 @@ class Index extends Controller
 
     }
 
+    //读取器跟修改器：
+    public function getter()
+    {
+        $user = User::get(2);
+        echo $user->v_username;
+    }
+
+    public function setter()
+    {
+        $user = User::get(2);
+        $user->v_username = 'lieyan111';
+        echo $user->v_username;
+    }
+
+
+
 
 }
