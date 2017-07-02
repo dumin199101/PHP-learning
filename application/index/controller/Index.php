@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 
+use app\common\model\Article;
 use app\common\model\User;
 use think\Controller;
 
@@ -382,6 +383,19 @@ class Index extends Controller
         echo $user->v_username;
     }
 
+    //类型转换自动完成
+    public function transfer()
+    {
+        $article = new Article();
+        $article->v_title = '类型转换';
+        $article->v_author = '烈焰';
+        $article->v_digest = 'TP5中模型类型转换';
+        $article->v_desc = 'TP5中模型类型转换，查询或写入时类型自动转换';
+        $article->n_isrecycle = 'is';
+        $article->n_create_time = '2017-07-02';
+        $article->v_cover_src = 'http://blog.lieyan.com/uploads/20170603/9045dd14162260167e06488a68e87f92.jpg';
+        $article->save();
+    }
 
 
 
