@@ -24,21 +24,20 @@ class Index extends Controller
      */
     public function guid($trim)
     {
-        if (function_exists('com_create_guid') === true)
-        {
+        if (function_exists('com_create_guid') === true) {
             return trim(com_create_guid(), '{}');
-        }else{
+        } else {
             mt_srand((double)microtime() * 10000);
             $charid = strtoupper(md5(uniqid(rand(), true)));
             $hyphen = chr(45);                  // "-"
             $lbrace = $trim ? "" : chr(123);    // "{"
             $rbrace = $trim ? "" : chr(125);    // "}"
-            $guidv4 = $lbrace.
-                substr($charid,  0,  8).$hyphen.
-                substr($charid,  8,  4).$hyphen.
-                substr($charid, 12,  4).$hyphen.
-                substr($charid, 16,  4).$hyphen.
-                substr($charid, 20, 12).
+            $guidv4 = $lbrace .
+                substr($charid, 0, 8) . $hyphen .
+                substr($charid, 8, 4) . $hyphen .
+                substr($charid, 12, 4) . $hyphen .
+                substr($charid, 16, 4) . $hyphen .
+                substr($charid, 20, 12) .
                 $rbrace;
             return $guidv4;
         }
@@ -47,11 +46,11 @@ class Index extends Controller
     //路由测试
     public function hello()
     {
-        $name = $this->request->param('name','');
-        return  'Hello:' . $name;
+        $name = $this->request->param('name', '');
+        return 'Hello:' . $name;
     }
 
-    public function today($year,$month)
+    public function today($year, $month)
     {
         return "today is {$year}年{$month}月";
     }
@@ -59,9 +58,9 @@ class Index extends Controller
     //生成url
     public function url()
     {
-        echo Url::build('index',['name'=>'du','age'=>2]);
+        echo Url::build('index', ['name' => 'du', 'age' => 2]);
         echo '<br/>';
-        echo url('admin/index/index',['name'=>'du']);
+        echo url('admin/index/index', ['name' => 'du']);
         echo '<br/>';
         echo url('today/2017/07'); //路由转换
         echo '<br/>';
@@ -78,7 +77,7 @@ class Index extends Controller
         //方式2
         echo $this->request->url() . '<br/>';
         //绑定参数
-        $this->request->bind('username','du');
+        $this->request->bind('username', 'du');
         //输出
         echo $this->request->username . '<br/>';
         //助手函数：
@@ -88,7 +87,7 @@ class Index extends Controller
         //input助手
         echo input('param.name') . '<br/>';
         //默认：
-        echo $this->request->param('age',22,'intval');
+        echo $this->request->param('age', 22, 'intval');
         //获取GET/POST/COOKIE/SESSION/FILE参数
 
         //request其它参数：
@@ -111,8 +110,8 @@ class Index extends Controller
     public function response()
     {
         $data = [
-            'name'=>'dudu',
-            'age'=>22
+            'name' => 'dudu',
+            'age' => 22
         ];
         return $data;  //更改default_return_type:json/xml
         return json($data); //json助手函数
@@ -122,12 +121,12 @@ class Index extends Controller
     //跳转重定向
     public function response2()
     {
-        $this->success('处理成功','index/index/index',['name'=>'du'],5);
-        $this->error('处理失败','index/index/index',['age'=>22],2);
-        $this->redirect('index/index/index',['name'=>'hello']);
+        $this->success('处理成功', 'index/index/index', ['name' => 'du'], 5);
+        $this->error('处理失败', 'index/index/index', ['age' => 22], 2);
+        $this->redirect('index/index/index', ['name' => 'hello']);
     }
 
-    
+
     //数据库操作
     public function db()
     {
@@ -151,39 +150,39 @@ class Index extends Controller
     public function db2()
     {
         $list = Db::table('tb_tag')->field('v_tag_name')
-            ->where('n_id','gt',5)
+            ->where('n_id', 'gt', 5)
             ->order('n_id desc')
-            ->limit(0,3)
+            ->limit(0, 3)
             ->select();
         dump($list);
 
         //自动提交事务
-        Db::transaction(function(){
+        Db::transaction(function () {
             Db::name('tag')->insert([
-                'v_tag_name'=>'Go'
+                'v_tag_name' => 'Go'
             ]);
             Db::name('tag')->update(
                 [
-                    'v_tag_name'=>'Angular',
-                    'n_id'=>13
+                    'v_tag_name' => 'Angular',
+                    'n_id' => 13
                 ]
             );
         });
 
         //手动提交事务：
         Db::startTrans();
-        try{
+        try {
             Db::name('tag')->insert([
-                'v_tag_name'=>'Vue'
+                'v_tag_name' => 'Vue'
             ]);
             Db::name('tag')->update(
                 [
-                    'v_tag_name'=>'Angular JS',
-                    'n_id'=>13
+                    'v_tag_name' => 'Angular JS',
+                    'n_id' => 13
                 ]
             );
             Db::commit();
-        }catch (Exception $e){
+        } catch (Exception $e) {
             Db::rollback();
         }
     }
@@ -291,10 +290,8 @@ class Index extends Controller
 //        });
 
 
-
-
     }
-    
+
     //模型和关联
     public function relation()
     {
@@ -312,6 +309,63 @@ class Index extends Controller
 //        if($result = User::create($data)){
 //            echo $result->v_username . '---' . $result->v_password . '---' . $result->n_id;
 //        }
+
+        //批量新增：
+//        $user = new User();
+//        $data = [
+//            ['v_username'=>'lieyan4','v_password'=>'S4cj77RLvgCEeGK2WujphQ=='],
+//            ['v_username'=>'lieyan5','v_password'=>'S4cj77RLvgCEeGK2WujphQ=='],
+//            ['v_username'=>'lieyan6','v_password'=>'S4cj77RLvgCEeGK2WujphQ==']
+//        ];
+//        if($user->saveAll($data)){
+//            echo '批量新增成功';
+//        }
+
+        //查询：
+        //根据主键查询
+//          $user = User::get(1);
+//          echo $user->v_username . '<br/>';
+//          echo $user['v_password'] . '<br/>';  //底层实现ArrayAccess接口，可以以数组方式访问
+
+        //getByXxx
+//          $user = User::getByVUsername('admin');
+//          halt($user->v_password);
+
+        //根据查询条件：
+//          $user = User::get(['v_username'=>'admin']);
+//          $user = User::where(['v_username'=>'admin'])->find();
+//          halt($user->v_password);
+
+//        $users = User::all(); //查询所有数据
+//            $users = User::all(['v_password'=>'S4cj77RLvgCEeGK2WujphQ==']);
+//            $users = User::where('v_password','S4cj77RLvgCEeGK2WujphQ==')->select();
+//
+//        foreach ($users as $user) {
+//            echo $user->v_username . '<br/>';
+//        }
+
+        //修改
+//        $user = User::get(2);
+//        $user->v_username = 'lieyan123';
+//        if(false!==$user->save()){
+//            echo '更新成功';
+//        }
+
+        //插入：
+//        $user = User::get(2);
+//        $user->v_username = 'lieyan123';
+//        $user->n_id = null;
+//        if(false!==$user->isUpdate(false)->save()){
+//            echo '添加成功';
+//        }
+
+        //根据条件更新：
+//        User::update(['v_username'=>'lieyan888'],['n_id'=>2]);
+
+        //删除：
+//        User::get(7)->delete();
+//        User::destroy(8);
+
     }
 
 
