@@ -398,6 +398,26 @@ class Index extends Controller
         $article->save();
     }
 
+    //查询范围
+    public function scoper()
+    {
+        /*$list = User::scope('name')->find();
+        halt($list->toArray());*/
+
+        //直接使用闭包形式
+        /*$list = User::scope(function($query){
+            $query->where('v_username','=','admin');
+        })->find();
+
+        halt($list->toArray());*/
+
+        //全局查询范围：
+        $list = Article::all();
+        halt($list);
+
+
+    }
+
 
 
 }

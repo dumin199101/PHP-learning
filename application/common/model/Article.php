@@ -31,4 +31,9 @@ class Article extends Model
     {
         return 2;
     }
+
+    //全局查询范围
+    protected static function base($query){
+        $query->where('n_isrecycle',2);
+    }
 }
