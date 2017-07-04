@@ -29,7 +29,6 @@ class Article extends Model
 
     protected function setNIsrecycleAttr($val, $data)
     {
-        $isrecycle = $val === 'is' ? 2 : 1;
-        return $isrecycle;
+        return 2;
     }
 }
