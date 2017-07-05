@@ -412,12 +412,27 @@ class Index extends Controller
         halt($list->toArray());*/
 
         //全局查询范围：
-        $list = Article::all();
-        halt($list);
+       /* $list = Article::all();
+        halt($list);*/
 
 
     }
 
+    //验证器：
+    public function valid()
+    {
+        if(request()->isPost()){
+            $user = new User();
+            $res = $user->allowField(true)->validate(true)->save(input('post.'));
+            if($res){
+                echo '添加成功';
+            }else{
+                $this->error($user->getError());
+            }
+        }else{
+            return $this->fetch();
+        }
+    }
 
 
 }
