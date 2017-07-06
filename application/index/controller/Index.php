@@ -3,6 +3,7 @@ namespace app\index\controller;
 
 use app\common\model\Article;
 use app\common\model\User;
+use app\common\model\Category;
 use think\Controller;
 
 use think\Db;
@@ -10,6 +11,7 @@ use think\db\Query;
 use think\Exception;
 use think\Request;
 use think\Url;
+
 
 class Index extends Controller
 {
@@ -433,6 +435,50 @@ class Index extends Controller
             return $this->fetch();
         }
     }
+    
+    //关联（一对多）
+    public function relation1()
+    {
+        $category = Category::get(1);
+        //执行两次查询：1查询分类为1的分类信息，2查询分类为1的文章信息
+        $articles = $category->article; //读取article属性,等到使用的时候才会去数据库查询,返回的是一个集合
+        foreach($articles as $article){
+            echo $article->v_title . '<br/>';
+            echo $article->v_author . '<br/>';
+        }
+        //进行条件查询：这个地方调用方法返回的是一个关联模型
+        $info = $category->article()->where('n_update_time','>',0)->find();
+//        halt($info->v_title);
+        //关联新增：
+        $category->article()->save([
+            'v_title'=>'测试123',
+            'v_author'=>'哈哈',
+            'v_digest'=>'测试关联模型',
+            'v_desc'=>'内容',
+            'v_cover_src'=>'http://blog.lieyan.com/uploads/20170603/9045dd14162260167e06488a68e87f92.jpg',
+            'n_user_id'=>1,
+        ]);
+        //批量关联新增：
+        $category->article()->saveAll([
+            [
+                'v_title'=>'测试123',
+                'v_author'=>'哈哈',
+                'v_digest'=>'测试关联模型',
+                'v_desc'=>'内容',
+                'v_cover_src'=>'http://blog.lieyan.com/uploads/20170603/9045dd14162260167e06488a68e87f92.jpg',
+                'n_user_id'=>1,
+            ],
+            [
+                'v_title'=>'测试345',
+                'v_author'=>'哈哈',
+                'v_digest'=>'测试关联模型',
+                'v_desc'=>'内容',
+                'v_cover_src'=>'http://blog.lieyan.com/uploads/20170603/9045dd14162260167e06488a68e87f92.jpg',
+                'n_user_id'=>1,
+            ],
 
+        ]);
+    }
+     
 
 }
