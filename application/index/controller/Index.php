@@ -391,12 +391,48 @@ class Index extends Controller
         $article->v_author = '烈焰';
         $article->v_digest = 'TP5中模型类型转换';
         $article->v_desc = 'TP5中模型类型转换，查询或写入时类型自动转换';
-        $article->n_isrecycle = 'is';
+//        $article->n_isrecycle = 'is';
         $article->n_create_time = '2017-07-02';
         $article->v_cover_src = 'http://blog.lieyan.com/uploads/20170603/9045dd14162260167e06488a68e87f92.jpg';
+//        halt($article->toArray());
         $article->save();
     }
 
+    //查询范围
+    public function scoper()
+    {
+        /*$list = User::scope('name')->find();
+        halt($list->toArray());*/
+
+        //直接使用闭包形式
+        /*$list = User::scope(function($query){
+            $query->where('v_username','=','admin');
+        })->find();
+
+        halt($list->toArray());*/
+
+        //全局查询范围：
+       /* $list = Article::all();
+        halt($list);*/
+
+
+    }
+
+    //验证器：
+    public function valid()
+    {
+        if(request()->isPost()){
+            $user = new User();
+            $res = $user->allowField(true)->validate(true)->save(input('post.'));
+            if($res){
+                echo '添加成功';
+            }else{
+                $this->error($user->getError());
+            }
+        }else{
+            return $this->fetch();
+        }
+    }
 
 
 }

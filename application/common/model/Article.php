@@ -29,7 +29,11 @@ class Article extends Model
 
     protected function setNIsrecycleAttr($val, $data)
     {
-        $isrecycle = $val === 'is' ? 2 : 1;
-        return $isrecycle;
+        return 2;
+    }
+
+    //全局查询范围
+    protected static function base($query){
+        $query->where('n_isrecycle',2);
     }
 }
