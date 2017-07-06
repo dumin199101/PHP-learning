@@ -479,6 +479,27 @@ class Index extends Controller
 
         ]);
     }
+
+    public function relation2()
+    {
+        //查询按分类分组后大于4篇的文章
+//        $list = Category::has('article','>=',4)->select();
+//        halt($list);
+
+//        $list = Category::hasWhere('article',['v_author'=>'烈焰'])->select();
+//        halt($list);
+
+        //关联更新：
+//        $category = Category::get(1);
+//        $article = $category->article()->getByVAuthor('杜民');
+//        $article->v_author = '嘟嘟';
+//        $article->save();
+
+        //关联删除：
+        $category = Category::get(2);
+        $category->article()->delete();
+
+    }
      
 
 }
