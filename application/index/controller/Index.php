@@ -500,6 +500,35 @@ class Index extends Controller
         $category->article()->delete();
 
     }
-     
+
+    //关联（一对一）
+    public function relation3()
+    {
+        //查询：
+//        $user = User::get(1);
+//        halt($user->car->v_car);
+
+        //添加：
+       /* $user = new User;
+        $user->v_username = 'lieyan444';
+        $user->v_password = 'S4cj77RLvgCEeGK2WujphQ==';
+        if($user->save()){
+            $user->car()->save(['v_car'=>'路虎']);
+        }*/
+
+     /*   $user2 = User::get(2);
+        $user2->car()->save(['v_car'=>'雪佛兰']);
+
+        //修改：
+        $user2 = User::get(1);
+        $res = $user2->car->save(['v_car'=>'雪佛兰']);*/
+
+        //删除：
+        $user2 = User::get(1);
+        $res = $user2->car->delete();
+        halt($res);
+
+
+    }
 
 }

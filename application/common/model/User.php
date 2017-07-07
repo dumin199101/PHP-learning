@@ -30,5 +30,9 @@ class User extends Model
         $query->where('v_username','admin');
     }
 
+    //这个方法一定要是public
+    public function car(){
+        return $this->hasOne('Car','n_user_id','n_id');
+    }
 
 }
