@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\common\model\Article;
+use app\common\model\Tag;
 use app\common\model\User;
 use app\common\model\Category;
 use think\Controller;
@@ -528,6 +529,48 @@ class Index extends Controller
         $res = $user2->car->delete();
         halt($res);
 
+
+    }
+    
+    //关联（多对多）
+    public function relation4()
+    {
+        //关联查询
+        /*$article = Article::get(1);
+        $tags = $article->tags;
+        foreach($tags as $tag){
+            echo $tag->v_tag_name . '<br/>';
+        }*/
+
+        //关联新增:自动写入关联表
+        /*$article->tags()->save(
+            [
+               'v_tag_name'=>'C#'
+            ]
+        );*/
+
+        //批量插入
+     /*   $article->tags()->saveAll(
+            [
+                [
+                    'v_tag_name'=>'C',
+                ],
+                [
+                    'v_tag_name'=>'C++',
+                ]
+            ]
+        );*/
+
+        //只新增关联表：
+//        $article = Article::get(2);
+//        $tag = Tag::getByVTagName('PHP');
+//        $article->tags()->attach($tag); //传入对象
+//        $article->tags()->attach(3); //传入ID
+
+        //删除：
+        $article = Article::get(6);
+//        $article->tags()->detach(2);  //只删除中间表
+        $article->tags()->detach([5,7,8],true); //中间表 跟关联表一起删除
 
     }
 
