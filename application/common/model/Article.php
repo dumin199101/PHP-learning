@@ -37,8 +37,8 @@ class Article extends Model
         $query->where('n_isrecycle',2);
     }
 
-    public function tags(){
-        return $this->belongsToMany('Tag','ArticleTag','n_tag_id','n_article_id');
+    public function tags()
+    {
+        return $this->belongsToMany('Tag','article_tag','n_tag_id','n_article_id');
     }
-
 }
