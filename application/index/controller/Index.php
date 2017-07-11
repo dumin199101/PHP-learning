@@ -531,6 +531,18 @@ class Index extends Controller
 
     }
 
+    /*关联(多对多)*/
+    public function relation4()
+    {
+        $article = Article::get(1);
+        //获取所有的标签：
+        $tags = $article->tags;
+        foreach($tags as $tag){
+            var_dump($tag->v_tag_name);
+        }
+
+    }
+
     
 
 
