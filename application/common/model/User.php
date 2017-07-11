@@ -35,4 +35,7 @@ class User extends Model
         return $this->hasOne('Car','n_user_id','n_id');
     }
 
+    protected function getStatusAttr($val,$data){
+         return "Good";
+    }
 }

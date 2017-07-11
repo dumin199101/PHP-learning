@@ -574,4 +574,17 @@ class Index extends Controller
 
     }
 
+    //模型输出：
+    public function output()
+    {
+        $user = User::get(1);
+//        dump($user);  //输出模型对象
+//        dump($user->toArray());  //转化为数组
+//        dump($user->hidden(['n_id'])->toArray()); //隐藏属性
+//        dump($user->visible(['v_username'])->toArray()); //显示属性
+//        dump($user->toJson()); //json输出
+//          echo User::get(2); //json输出
+        dump($user->append(['status'])->toArray()); //通过读取器设置属性
+    }
+
 }
