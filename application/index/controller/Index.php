@@ -588,4 +588,28 @@ class Index extends Controller
         dump($user->append(['status'])->toArray()); //通过读取器设置属性
     }
 
+    //视图跟模板
+    public function template()
+    {
+        $list = User::all();
+        return $this->fetch('user',[
+            'list'=>$list
+        ]);
+    }
+
+    //分页
+    public function template2()
+    {
+        $list = User::paginate(3);
+        return $this->fetch('user2',[
+            'list'=>$list
+        ]);
+    }
+
+    //公共模板 模板定位
+    public function template3()
+    {
+        return $this->fetch('user3');
+    }
+
 }

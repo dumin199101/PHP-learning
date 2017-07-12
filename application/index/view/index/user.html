@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+</head>
+<body>
+      {foreach name='list' id='vo'}
+           用户名：{$vo.v_username}<br/>
+           密码：{$vo.v_password}<br/>
+      {/foreach}
+</body>
+</html>
