@@ -19,7 +19,7 @@ return [
     // 应用调试模式
     'app_debug' => true,
     // 应用Trace
-    'app_trace' => false,
+    'app_trace' => true,
     // 应用模式状态
     'app_status' => '',
     // 是否支持多模块
@@ -125,7 +125,8 @@ return [
         // 模板引擎类型 支持 php think 支持扩展
         'type' => 'Think',
         // 模板路径
-        'view_path' => '../templates/red/',
+        'view_path' => '',
+//        'view_path' => '../templates/red/',
         // 模板后缀
         'view_suffix' => 'html',
         // 模板文件名分隔符

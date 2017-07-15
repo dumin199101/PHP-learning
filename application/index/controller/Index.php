@@ -10,6 +10,7 @@ use think\Controller;
 use think\Db;
 use think\db\Query;
 use think\Exception;
+use think\Log;
 use think\Request;
 use think\Url;
 
@@ -611,5 +612,18 @@ class Index extends Controller
     {
         return $this->fetch('user3');
     }
+    
+    //调试
+    public function debug()
+    {
+        trace('Notice');
+        Log::info("Hello Info");
+        Log::error("Hello Error");
+        trace('Hello Debug','info');
+        trace('Hello Error','error');
+        dump(123);
+        halt("Hello");
+    }
+    
 
 }
